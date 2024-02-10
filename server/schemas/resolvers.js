@@ -1,4 +1,4 @@
-const { sign } = require('jsonwebtoken');
+
 const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
@@ -17,6 +17,9 @@ const resolvers ={
 
     Mutation: {
         addUser: async (parent,args) => {
+
+            console.log("AAAAAAAAAAAAAA");
+            console.log(args)
             const user = await User.create(args);
             const token = signToken(user);
             return { token,user };
@@ -38,7 +41,7 @@ const resolvers ={
             return { token, user }
         },  
 
-        keepBook: async (parent, { bookData }, context) => {
+        saveBook: async (parent, { bookData }, context) => {
             if (context.user) {
                 const newInv = await User.findByIdAndUpdate(
                     { _id: context.user._id },
@@ -49,7 +52,7 @@ const resolvers ={
             }
             throw AuthenticationError
         },
-        deleteBook: async (parent, { booknum }, context) => {
+        removeBook: async (parent, { booknum }, context) => {
             if (context.user) {
                 const newInv = await User.findOneAndUpdate(
                     { _id: context.user._id },
@@ -65,4 +68,4 @@ const resolvers ={
     },
 }
 
-module.exports = resolvers();
+module.exports = resolvers;
