@@ -18,8 +18,9 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  const { data, userDataLength } = useQuery(GET_ME)
+  const { loading, data } = useQuery(GET_ME)
   const userData = data?.me || {};
+  console.log(userData);
 
   const [removeBook] = useMutation(REMOVE_BOOK)
 
@@ -30,7 +31,7 @@ const SavedBooks = () => {
     try {
        await removeBook({
         variables: { bookId },
-        refetchQueries: [{ query: GET_ME }],
+       
       });
 
   
@@ -40,8 +41,8 @@ const SavedBooks = () => {
     }
   };
 
-  if (!userDataLength) {
-    return <h2>It's Not Loading.... (you should smash your computer just like i'm about to while trying to get this to work)</h2>;
+  if (loading) {
+    return <h2>Loading...</h2>;
   }
 
   return (
