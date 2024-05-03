@@ -28,6 +28,7 @@ This a Book Search Application Developed by me, using the googleBooks API, you c
 
 ## Installation
 
+
 1. Clone The repository from GitHub
 
 2. In the Terminal, install dependencies with `npm i`
